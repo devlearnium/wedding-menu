@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Свадебный банкет -- Меню на 50 гостей</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background: linear-gradient(135deg, #f5f0e8 0%, #ebe5d9 100%);
+            color: #3a3a3a;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #fff 0%, #f9f5ec 100%);
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+            border: 2px solid #d4af37;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            color: #8b6914;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        header .subtitle {
+            font-size: 1.2em;
+            color: #6b5d3a;
+            font-style: italic;
+        }
+
+        .info-panel {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .info-card {
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+            border-left: 4px solid #d4af37;
+        }
+
+        .info-card .label {
+            font-size: 0.9em;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .info-card .value {
+            font-size: 1.6em;
+            font-weight: bold;
+            color: #8b6914;
+        }
+
+        .info-card .note {
+            font-size: 0.85em;
+            color: #999;
+            margin-top: 5px;
+        }
+
+        .menu-section {
+            margin-bottom: 40px;
+        }
+
+        .menu-card {
+            background: #fff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+            border: 1px solid #e8e0d0;
+        }
+
+        .menu-header {
+            background: linear-gradient(135deg, #8b6914 0%, #d4af37 100%);
+            color: #fff;
+            padding: 25px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .menu-header h2 {
+            font-size: 1.6em;
+            letter-spacing: 1px;
+        }
+
+        .menu-header .tag {
+            background: rgba(255,255,255,0.2);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-style: italic;
+        }
+
+        .menu-body {
+            padding: 25px 30px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead th {
+            background: #f9f5ec;
+            padding: 12px 15px;
+            text-align: left;
+            font-size: 0.85em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #8b6914;
+            border-bottom: 2px solid #d4af37;
+        }
+
+        thead th:last-child,
+        thead th:nth-child(3) {
+            text-align: right;
+        }
+
+        tbody td {
+            padding: 14px 15px;
+            border-bottom: 1px solid #f0ebe0;
+            vertical-align: top;
+        }
+
+        tbody td:last-child,
+        tbody td:nth-child(3) {
+            text-align: right;
+            white-space: nowrap;
+        }
+
+        tbody tr:hover {
+            background: #fdfbf6;
+        }
+
+        .dish-name {
+            font-weight: bold;
+            color: #3a3a3a;
+            font-size: 1.05em;
+        }
+
+        .dish-desc {
+            font-size: 0.85em;
+            color: #888;
+            font-style: italic;
+            margin-top: 3px;
+        }
+
+        .dish-weight {
+            color: #6b5d3a;
+            font-size: 0.9em;
+        }
+
+        .dish-price {
+            font-weight: bold;
+            color: #8b6914;
+            font-size: 1.05em;
+        }
+
+        .menu-footer {
+            background: #f9f5ec;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            border-top: 2px solid #d4af37;
+        }
+
+        .total-block {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .total-item {
+            text-align: center;
+        }
+
+        .total-item .t-label {
+            font-size: 0.8em;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .total-item .t-value {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #8b6914;
+        }
+
+        .tips-section {
+            background: #fff;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+            border: 2px solid #d4af37;
+        }
+
+        .tips-section h2 {
+            color: #8b6914;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .tips-list {
+            list-style: none;
+        }
+
+        .tips-list li {
+            padding: 12px 0 12px 35px;
+            position: relative;
+            border-bottom: 1px solid #f0ebe0;
+        }
+
+        .tips-list li:last-child {
+            border-bottom: none;
+        }
+
+        .tips-list li::before {
+            content: "💡";
+            position: absolute;
+            left: 0;
+            top: 12px;
+            font-size: 1.2em;
+        }
+
+        .tips-list strong {
+            color: #8b6914;
+        }
+
+        .print-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #8b6914 0%, #d4af37 100%);
+            color: #fff;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 50px;
+            font-size: 1em;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(139,105,20,0.4);
+            transition: transform 0.2s;
+            font-family: inherit;
+        }
+
+        .print-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        @media print {
+            body {
+                background: #fff;
+                padding: 0;
+            }
+            .print-btn {
+                display: none;
+            }
+            .menu-card {
+                break-inside: avoid;
+                box-shadow: none;
+                border: 1px solid #ccc;
+            }
+            header {
+                box-shadow: none;
+            }
+        }
+
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+            .menu-header {
+                padding: 20px;
+            }
+            .menu-header h2 {
+                font-size: 1.2em;
+            }
+            .menu-body {
+                padding: 15px;
+            }
+            thead th, tbody td {
+                padding: 10px 8px;
+                font-size: 0.9em;
+            }
+            .menu-footer {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <header>
+            <h1>💍 СВАДЕБНЫЙ БАНКЕТ 💍</h1>
+            <div class="subtitle">Меню на 50 гостей · 6 человек за столом</div>
+        </header>
+
+        <div class="info-panel">
+            <div class="info-card">
+                <div class="label">Гостей</div>
+                <div class="value">50</div>
+                <div class="note">6 человек за столом</div>
+            </div>
+            <div class="info-card">
+                <div class="label">Бюджет на еду</div>
+                <div class="value">5 800 ₽</div>
+                <div class="note">на 1 человека</div>
+            </div>
+            <div class="info-card">
+                <div class="label">Морс (2 л)</div>
+                <div class="value">400 ₽</div>
+                <div class="note">25–28 кувшинов</div>
+            </div>
+            <div class="info-card">
+                <div class="label">Алкоголь</div>
+                <div class="value">Свой</div>
+                <div class="note">не учитывается</div>
+            </div>
+        </div>
+
+        <!-- ВАРИАНТ 1 -->
+        <div class="menu-section">
+            <div class="menu-card">
+                <div class="menu-header">
+                    <h2>Вариант 1 · Классический сытный</h2>
+                    <span class="tag">Беспроигрышный выбор</span>
+                </div>
+                <div class="menu-body">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Блюдо</th>
+                                <th>Вес</th>
+                                <th>Цена</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="dish-name">Салат "Оливье" с языком и курицей</div>
+                                    <div class="dish-desc">Говяжий язык, куриное филе, картофель, морковь, горошек, огурцы, яйцо, соус провансаль</div>
+                                </td>
+                                <td class="dish-weight">150 г</td>
+                                <td class="dish-price">450 ₽</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="dish-name">Салат греческий</div>
+                                    <div class="dish-desc">Томаты, огурцы, перец, маслины, сыр сиртаки, греческая заправка</div>
+                                </td>
+                                <td class="dish-weight">200 г</td>
+                                <td class="dish-price">480 ₽</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="dish-name">Рулет куриный</div>
+                                    <div class="dish-desc">Подаётся с соусом хрен</div>
+                                </td>
+                                <td class="dish-weight">150 г</td>
+                                <td class="dish-price">630 ₽</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="dish-name">Мясная тарелка</div>
+                                    <div class="dish-desc">Сало солёное, буженина, язык говяжий отварной</div>
+                                </td>
+                                <td class="dish-weight">150 г</td>
+                                <td class="dish-price">950 ₽</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="dish-name">Овощная тарелка</div>
+                                    <div class="dish-desc">Нарезка из свежих помидоров, огурцов, сладкого перца с зеленью</div>
+                                </td>
+                                <td class="dish-weight">330 г</td>
+                                <td class="dish-price">590 ₽</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="dish-name">Лесные грибочки</div>
+                                </td>
+                                <td class="dish-weight">200 г</td>
+                                <td class="dish-price">860 ₽</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="dish-name">Баклажаны, жаренные с грибами и овощами</div>
+                                    <div class="dish-desc">Баклажаны, перец, помидоры, чеснок, шампиньоны, кинза, соус соевый</div>
+                                </td>
+                                <td class="dish-weight">350 г</td>
+                                <td class="dish-price">680 ₽</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="dish-name">Говядина по-калифорнийски</div>
+                                    <div class="dish-desc">В маринаде на основе зерновой горчицы, соевого соуса и чеснока. Подаётся с печёными овощами и соусом "ковбой"</div>
+                                </td>
+                                <td class="dish-weight">180 г</td>
+                                <td class="dish-price">1 010 ₽</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="dish-name">Хлебная корзина</div>
+                                </td>
+                                <td class="dish-weight">--</td>
+                                <td class="dish-price">~150 ₽</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="menu-footer">
+                    <div class="total-block">
+                        <div class="total-item">
+                            <div class="t-label">Итого на человека</div>
+                            <div class="t-value">~5 800 ₽</div>
+                        </div>
+                        <div class="total-item">
+                            <div class="t-label">Общий вес</div>
+                            <div class="t-value">~1,7 кг</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ВАРИАНТ 2 -->
+        <div class="menu-section">
+            <div class="menu-card">
+                <div class="menu-header">
+                    <h2>Вариант 2 · Рыбный с форелью</h2>
+                    <span class="tag">Лёгкий и изысканный</span>
+                </div>
+                <div class="menu-body">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Блюдо</th>
+                                <th>Вес</th>
+                                <th>Цена</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="dish-name">Салат "Фишн Тоннато"</div>
+                                    <div class="dish-desc">Микс-салат, базилик, форель слабосолёная, томаты, лук красный, оливки, кунжут</div>
+                                </td>
+                                <td class="dish-weight">200 г</td>
+                                <td class="dish-price">890 ₽</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="dish-name">Салат греческий</div>
+                                </td>
+                                <td class="dish-weight">200 г</td>
+                                <td class="dish-price">480 ₽</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="dish-name">Форель слабосолёная с лимоном и оливками</div>
+                                </td>
+                                <td class="dish-weight">100 г</td>
+                                <td class="dish-price">980 ₽</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="dish-name">Рулетики из баклажанов с угрём</div>
+                                    <div class="dish-desc">Баклажаны, угорь копчёный, сыр творожный, огурец свежий, соус терияки, кунжут, кинза</div>
+                                </td>
+                                <td class="dish-weight">170 г</td>
+                                <td class="dish-price">680 ₽</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="dish-name">Овощная тарелка</div>
+                                </td>
+                                <td class="dish-weight">330 г</td>
+                                <td class="dish-price">590 ₽</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="dish-name">Баклажаны по-восточному</div>
+                                    <div class="dish-desc">Баклажаны, перец, чеснок, соус соевый, масло кунжутное</div>
+                                </td>
+                                <td class="dish-weight">250 г</td>
+                                <td class="dish-price">650 ₽</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="dish-name">Форель запечённая</div>
+                                    <div class="dish-desc">С соусом на выбор: унаги / сливочно-креветочный / терияки</div>
+                                </td>
+                                <td class="dish-weight">100 г + соус</td>
+                                <td class="dish-price">1 400 ₽</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="dish-name">Хлебная корзина</div>
+                                </td>
+                                <td class="dish-weight">--</td>
+                                <td class="dish-price">~150 ₽</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="menu-footer">
+                    <div class="total-block">
+                        <div class="total-item">
+                            <div class="t-label">Итого на человека</div>
+                            <div class="t-value">~5 820 ₽</div>
+                        </div>
+                        <div class="total-item">
+                            <div class="t-label">Общий вес</div>
+                            <div class="t-value">~1,45 кг</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ВАРИАНТ 3 -->
+        <div class="menu-section">
+            <div class="menu-card">
+                <div class="menu-header">
+                    <h2>Вариант 3 · Мясной гастро-тур</h2>
+                    <span class="tag">Статусное меню</span>
+                </div>
+                <div class="menu-body">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Блюдо</th>
+                                <th>Вес</th>
+                                <th>Цена</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="dish-name">Салат "Мичиган"</div>
+                                    <div class="dish-desc">Ростбиф, микс-салат, перец сладкий, томаты, огурцы, кинза</div>
+                                </td>
+                                <td class="dish-weight">190 г</td>
+                                <td class="dish-price">1 250 ₽</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="dish-name">Салат "Оливье" с языком и курицей</div>
+                                </td>
+                                <td class="dish-weight">150 г</td>
+                                <td class="dish-price">450 ₽</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="dish-name">Мясная тарелка</div>
+                                    <div class="dish-desc">Сало солёное, буженина, язык говяжий отварной</div>
+                                </td>
+                                <td class="dish-weight">150 г</td>
+                                <td class="dish-price">950 ₽</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="dish-name">Овощная тарелка</div>
+                                </td>
+                                <td class="dish-weight">330 г</td>
+                                <td class="dish-price">590 ₽</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="dish-name">Баклажаны по-восточному</div>
+                                </td>
+                                <td class="dish-weight">250 г</td>
+                                <td class="dish-price">650 ₽</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="dish-name">Рулетики куриные с моцареллой и беконом</div>
+                                </td>
+                                <td class="dish-weight">240 г</td>
+                                <td class="dish-price">890 ₽</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="dish-name">Говядина по-канзасски</div>
+                                    <div class="dish-desc">В маринаде на основе зерновой горчицы, майонеза и специй. Подаётся с печёными овощами и соусом "ковбой"</div>
+                                </td>
+                                <td class="dish-weight">180 г</td>
+                                <td class="dish-price">1 010 ₽</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="menu-footer">
+                    <div class="total-block">
+                        <div class="total-item">
+                            <div class="t-label">Итого на человека</div>
+                            <div class="t-value">~5 790 ₽</div>
+                        </div>
+                        <div class="total-item">
+                            <div class="t-label">Общий вес</div>
+                            <div class="t-value">~1,5 кг</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ВАРИАНТ 4 -->
+        <div class="menu-section">
+            <div class="menu-card">
+                <div class="menu-header">
+                    <h2>Вариант 4 · Птица и овощи</h2>
+                    <span class="tag">Нежный и разнообразный</span>
+                </div>
+                <div class="menu-body">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Блюдо</th>
+                                <th>Вес</th>
+                                <th>Цена</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="dish-name">Салат "Манго-Чили"</div>
+                                    <div class="dish-desc">Микс-салат, куриное филе, маслины, оливки, лук красный, мята, апельсин, сыр сиртаки, соус манго-чили, миндаль</div>
+                                </td>
+                                <td class="dish-weight">230 г</td>
+                                <td class="dish-price">910 ₽</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="dish-name">Салат "Алабама"</div>
+                                    <div class="dish-desc">Микс-салат, кинза, кальмар отварной, яйцо перепелиное, томаты, каперсы, соус луковый, лук сушёный</div>
+                                </td>
+                                <td class="dish-weight">185 г</td>
+                                <td class="dish-price">850 ₽</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="dish-name">Пастрами из индейки</div>
+                                    <div class="dish-desc">Запечённое филе индейки, маринованное в сухих специях</div>
+                                </td>
+                                <td class="dish-weight">200 г</td>
+                                <td class="dish-price">1 300 ₽</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="dish-name">Рулет куриный</div>
+                                    <div class="dish-desc">С соусом хрен</div>
+                                </td>
+                                <td class="dish-weight">150 г</td>
+                                <td class="dish-price">630 ₽</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="dish-name">Овощная тарелка</div>
+                                </td>
+                                <td class="dish-weight">330 г</td>
+                                <td class="dish-price">590 ₽</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="dish-name">Баклажаны по-восточному</div>
+                                </td>
+                                <td class="dish-weight">250 г</td>
+                                <td class="dish-price">650 ₽</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="dish-name">Филе индейки в горчично-манговом маринаде</div>
+                                </td>
+                                <td class="dish-weight">140 г</td>
+                                <td class="dish-price">690 ₽</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="dish-name">Хлебная корзина</div>
+                                </td>
+                                <td class="dish-weight">--</td>
+                                <td class="dish-price">~150 ₽</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="menu-footer">
+                    <div class="total-block">
+                        <div class="total-item">
+                            <div class="t-label">Итого на человека</div>
+                            <div class="t-value">~5 770 ₽</div>
+                        </div>
+                        <div class="total-item">
+                            <div class="t-label">Общий вес</div>
+                            <div class="t-value">~1,5 кг</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ВАРИАНТ 5 -->
+        <div class="menu-section">
+            <div class="menu-card">
+                <div class="menu-header">
+                    <h2>Вариант 5 · Максимальное изобилие</h2>
+                    <span class="tag">Упор на объём и сытность</span>
+                </div>
+                <div class="menu-body">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Блюдо</th>
+                                <th>Вес</th>
+                                <th>Цена</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="dish-name">Салат "Оливье" с языком и курицей</div>
+                                </td>
+                                <td class="dish-weight">150 г</td>
+                                <td class="dish-price">450 ₽</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="dish-name">Салат "Теннесси"</div>
+                                    <div class="dish-desc">Вырезка говядины, микс-салат, огурцы, перец сладкий, маслины, лук красный, кинза, острый маринад</div>
+                                </td>
+                                <td class="dish-weight">210 г</td>
+                                <td class="dish-price">1 310 ₽</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="dish-name">Мясная тарелка</div>
+                                    <div class="dish-desc">Сало солёное, буженина, язык говяжий отварной</div>
+                                </td>
+                                <td class="dish-weight">150 г</td>
+                                <td class="dish-price">950 ₽</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="dish-name">Овощная тарелка</div>
+                                </td>
+                                <td class="dish-weight">330 г</td>
+                                <td class="dish-price">590 ₽</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="dish-name">Лесные грибочки</div>
+                                </td>
+                                <td class="dish-weight">200 г</td>
+                                <td class="dish-price">860 ₽</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="dish-name">Баклажаны, жаренные с грибами и овощами</div>
+                                </td>
+                                <td class="dish-weight">350 г</td>
+                                <td class="dish-price">680 ₽</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="dish-name">Цыплёнок-гриль</div>
+                                    <div class="dish-desc">Порция 300 г (3 × 100 г)</div>
+                                </td>
+                                <td class="dish-weight">300 г</td>
+                                <td class="dish-price">810 ₽</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="dish-name">Хлебная корзина</div>
+                                </td>
+                                <td class="dish-weight">--</td>
+                                <td class="dish-price">~150 ₽</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="menu-footer">
+                    <div class="total-block">
+                        <div class="total-item">
+                            <div class="t-label">Итого на человека</div>
+                            <div class="t-value">~5 800 ₽</div>
+                        </div>
+                        <div class="total-item">
+                            <div class="t-label">Общий вес</div>
+                            <div class="t-value">~1,7 кг</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- СОВЕТЫ -->
+        <div class="tips-section">
+            <h2>💡 Советы по заказу</h2>
+            <ul class="tips-list">
+                <li><strong>Семейная подача (Family Style):</strong> Уточните в ресторане, можно ли овощную тарелку, лесные грибочки и баклажаны заказать большими блюдами на стол (на 6 человек). Это выглядит обильнее и часто выходит дешевле.</li>
+                <li><strong>Горячее блюдо</strong> подаётся порционно каждому гостю.</li>
+                <li><strong>Хлеб:</strong> Цена на хлебную корзину не указана в меню -- уточните у администратора. Если дешевле 150 ₽, можно добавить Маслины (780 ₽) или ещё один рулет (630 ₽).</li>
+                <li><strong>Морс:</strong> На 50 гостей нужно <strong>25–28 кувшинов</strong> по 2 л (из расчёта ~1 л на человека). Итого: ~10 000–11 200 ₽.</li>
+                <li><strong>Пробковый сбор:</strong> Уточните, берёт ли заведение плату за свой алкоголь. Если да -- эту сумму нужно вычесть из пищевого бюджета.</li>
+                <li><strong>Резерв:</strong> В каждом варианте заложен небольшой резерв -- используйте его на увеличение граммовки горячего или дополнительные соусы.</li>
+            </ul>
+        </div>
+
+    </div>
+
+    <button class="print-btn" onclick="window.print()">️ Распечатать</button>
+
+</body>
+</html>
